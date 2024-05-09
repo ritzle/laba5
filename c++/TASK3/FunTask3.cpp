@@ -4,7 +4,6 @@ using namespace std;
 
 void creatTrain(vector<trainInfo> &trains, vector<townInfo> &towns)
 {
-
     cout << "Enter name train: ";
     string nameTrain;
     cin >> nameTrain;
@@ -43,10 +42,22 @@ void creatTrain(vector<trainInfo> &trains, vector<townInfo> &towns)
 
     string town; // слово из строки allTown
 
+    size_t numStations = 0;
     while (iss >> town)
     {
         pTrain->stationTown.push_back(town);
         creatTown(nameTrain, town, towns);
+        numStations++;
+    }
+
+    // Проверяем, что количество станций больше 1
+    if (numStations <= 1 && pTrain->stationTown.empty())
+    {
+        // Удаляем поезд из вектора trains
+        auto trainIt = find_if(trains.begin(), trains.end(), [&](const trainInfo &train)
+                               { return train.name == nameTrain; });
+        if (trainIt != trains.end())
+            trains.erase(trainIt);
     }
 
     return;
@@ -95,6 +106,8 @@ void trainsForTown(std::string town, vector<townInfo> &towns)
     {
         cout << i << " ";
     }
+
+    cout << endl;
 }
 
 void trainsForTownDop(std::string town, std::string train, vector<townInfo> &towns)
@@ -141,13 +154,15 @@ void townsForTrain(std::string nameTrain, vector<trainInfo> &train, vector<townI
         return;
     }
 
-    cout << "train: " << pTrain->name << " - town: ";
+    cout << "train: " << pTrain->name << "  town: ";
     for (auto i : pTrain->stationTown)
     {
         cout << i << "(";
         trainsForTownDop(i, nameTrain, towns);
-        cout << ")" << " ";
+        cout << ")" << " - ";
     }
+
+    cout << endl;
 
     return;
 }
@@ -156,6 +171,6 @@ void coutTrains(vector<trainInfo> &trains)
 {
     for (auto train : trains)
     {
-        cout << "Train: " << train.name << " - " << train.stationTown;
+        cout << "Train: " << train.name << " - " << train.stationTown << endl;
     }
 }

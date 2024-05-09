@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <limits>
+#include <algorithm>
 
 using namespace std;
 
