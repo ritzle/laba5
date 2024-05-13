@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -25,8 +25,8 @@ int main()
 
     cout << "1 = Create_train 2 = Trains_for_Town 3 = Towns_for_train 4 = trains E = exit" << endl;
 
-    vector<trainInfo> trains;
-    vector<townInfo> towns;
+    deque<trainInfo> trains;
+    deque<townInfo> towns;
 
     while (true)
     {

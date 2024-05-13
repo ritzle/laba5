@@ -3,27 +3,28 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <deque>
 #include <sstream>
 #include <limits>
 #include <algorithm>
+#include <deque>
 
 using namespace std;
 
 struct trainInfo
 {
     string name;
-    vector<string> stationTown;
+    deque<string> stationTown;
 };
 
 struct townInfo
 {
     string name;
-    vector<string> passingTrain;
+    deque<string> passingTrain;
 };
 
 template <typename T>
-ostream &operator<<(ostream &os, const vector<T> &nums) // возвращаем ссылку на поток что бы cout мог ухватиться и вывести что-то следом
+ostream &operator<<(ostream &os, const deque<T> &nums) // возвращаем ссылку на поток что бы cout мог ухватиться и вывести что-то следом
 {
     for (auto i : nums)
     {
@@ -32,13 +33,13 @@ ostream &operator<<(ostream &os, const vector<T> &nums) // возвращаем 
     return os;
 }
 
-void creatTrain(vector<trainInfo> &trains, vector<townInfo> &towns);
-void trainsForTown(std::string town, vector<townInfo> &towns); // вывод всех поездов которые проходят черз город
+void creatTrain(deque<trainInfo> &trains, deque<townInfo> &towns);
+void trainsForTown(std::string town, deque<townInfo> &towns); // вывод всех поездов которые проходят черз город
 
-void townsForTrain(std::string nameTrain, vector<trainInfo> &train, vector<townInfo> &towns);
-void trainsForTownDop(std::string town, std::string train, vector<townInfo> &towns);
-void coutTrains(vector<trainInfo> &trains);
+void townsForTrain(std::string nameTrain, deque<trainInfo> &train, deque<townInfo> &towns);
+void trainsForTownDop(std::string town, std::string train, deque<townInfo> &towns);
+void coutTrains(const std::deque<trainInfo> &trains);
 
-void creatTown(string train, string town, vector<townInfo> &towns);
+void creatTown(string train, string town, deque<townInfo> &towns);
 
 #endif // HTASK3_H

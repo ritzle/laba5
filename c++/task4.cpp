@@ -39,8 +39,53 @@ int main()
     cin >> action;
     switch (action)
     {
+
+    case '0':
+
+        cout << "enter n: ";
+
+        int n;
+        cin >> n;
+
+        for (int i = 0; i < n; i++)
+        {
+            cout << "Enter a request (FRIENDS, COUNT, QUESTION, or E to exit): ";
+            string request;
+            cin >> request;
+
+            if (request == "E")
+                break;
+
+            if (request == "FRIENDS")
+            {
+                string name1, name2;
+                cout << "Enter two names: ";
+                cin >> name1 >> name2;
+                friends(name1, name2, people);
+            }
+            else if (request == "COUNT")
+            {
+                string name;
+                cout << "Enter a name: ";
+                cin >> name;
+                cout << "Number of friends for " << name << ": " << countFriends(name, people) << endl;
+            }
+            else if (request == "QUESTION")
+            {
+                string name1, name2;
+                cout << "Enter two names: ";
+                cin >> name1 >> name2;
+                cout << (questionFriends(name1, name2, people) ? "YES" : "NO") << endl;
+            }
+            else
+            {
+                cout << "Invalid request. Please try again." << endl;
+            }
+        }
+        break;
+
     case '1':
-        friends("Peter", "Goward", people);
+        friends("Peter", "Peter", people);
         cout << countFriends("Sally", people) << endl;
         friends("Goward", "Sally", people);
         cout << countFriends("Goward", people) << endl;
@@ -109,6 +154,11 @@ int main()
 
 void friends(string nameOne, string nameTwo, vector<infoPeople> &people)
 {
+
+    if (nameOne == nameTwo)
+    {
+        return;
+    }
     // Найдем или создадим структуру для nameOne
     infoPeople *personOne = nullptr;
     for (auto &person : people)

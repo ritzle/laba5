@@ -169,6 +169,11 @@ void ADD(map<char, vector<vector<vector<map<string, int>>>>> &stock)
     cout << "countProduct: ";
     cout << "cellAddress: ";
     cin >> nameProduct >> countProduct >> cellAddress;
+    if (cellAddress.size() != 7)
+    {
+        cout << "error";
+        return;
+    }
 
     if (addProduct(nameProduct, countProduct, cellAddress, stock))
     {

@@ -1,8 +1,10 @@
 #include "hTask3.h"
+#include <set>
+#include <unordered_set>
 
 using namespace std;
 
-void creatTrain(vector<trainInfo> &trains, vector<townInfo> &towns)
+void creatTrain(deque<trainInfo> &trains, deque<townInfo> &towns)
 {
     cout << "Enter name train: ";
     string nameTrain;
@@ -25,45 +27,50 @@ void creatTrain(vector<trainInfo> &trains, vector<townInfo> &towns)
     }
 
     // Очистка буфера ввода
-    std::cin.clear();                                                   // очистка флагов ошибок
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // очистка буфера до конца строки
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     cout << "Enter all stops in a row: ";
     string allTown;
     getline(cin, allTown);
 
-    istringstream iss(allTown); // позволяет работать с строкой как с потоком ввода
+    istringstream iss(allTown);
 
-    if (!iss) // проверка ограничений
+    if (!iss)
     {
         cout << "Error";
         return;
     }
 
-    string town; // слово из строки allTown
+    string town;
+    set<string> onlyTown;
+    deque<string> stationTown;
 
-    size_t numStations = 0;
     while (iss >> town)
     {
-        pTrain->stationTown.push_back(town);
-        creatTown(nameTrain, town, towns);
-        numStations++;
+        onlyTown.insert(town); // Добавляем город в множество для удаления дубликатов
     }
 
-    // Проверяем, что количество станций больше 1
-    if (numStations <= 1 && pTrain->stationTown.empty())
+    // Заполняем список станций без повторяющихся городов
+    stationTown.assign(onlyTown.begin(), onlyTown.end());
+
+    if (stationTown.size() > 1)
     {
-        // Удаляем поезд из вектора trains
-        auto trainIt = find_if(trains.begin(), trains.end(), [&](const trainInfo &train)
-                               { return train.name == nameTrain; });
-        if (trainIt != trains.end())
-            trains.erase(trainIt);
+        pTrain->stationTown = std::move(stationTown);
+        for (const auto &i : onlyTown)
+        {
+            creatTown(nameTrain, i, towns);
+        }
+    }
+    else
+    {
+        cout << "Error: there must be more than 1 stations" << endl;
     }
 
     return;
 }
 
-void creatTown(string nameTrain, string nameTown, vector<townInfo> &towns)
+void creatTown(string nameTrain, string nameTown, deque<townInfo> &towns)
 {
 
     townInfo *pTown = nullptr;
@@ -84,7 +91,7 @@ void creatTown(string nameTrain, string nameTown, vector<townInfo> &towns)
     pTown->passingTrain.push_back(nameTrain);
 }
 
-void trainsForTown(std::string town, vector<townInfo> &towns)
+void trainsForTown(std::string town, deque<townInfo> &towns)
 {
     townInfo *pTown = nullptr;
     for (auto &itTown : towns)
@@ -110,7 +117,7 @@ void trainsForTown(std::string town, vector<townInfo> &towns)
     cout << endl;
 }
 
-void trainsForTownDop(std::string town, std::string train, vector<townInfo> &towns)
+void trainsForTownDop(std::string town, std::string train, deque<townInfo> &towns)
 {
     townInfo *pTown = nullptr;
     for (auto &itTown : towns)
@@ -136,7 +143,7 @@ void trainsForTownDop(std::string town, std::string train, vector<townInfo> &tow
     }
 }
 
-void townsForTrain(std::string nameTrain, vector<trainInfo> &train, vector<townInfo> &towns)
+void townsForTrain(std::string nameTrain, deque<trainInfo> &train, deque<townInfo> &towns)
 {
 
     trainInfo *pTrain = nullptr;
@@ -150,7 +157,7 @@ void townsForTrain(std::string nameTrain, vector<trainInfo> &train, vector<townI
     }
     if (pTrain == nullptr)
     {
-        cout << "Error";
+        cout << "there is no such train" << endl;
         return;
     }
 
@@ -167,10 +174,21 @@ void townsForTrain(std::string nameTrain, vector<trainInfo> &train, vector<townI
     return;
 }
 
-void coutTrains(vector<trainInfo> &trains)
+void coutTrains(const std::deque<trainInfo> &trains)
 {
-    for (auto train : trains)
+    for (const auto &train : trains)
     {
-        cout << "Train: " << train.name << " - " << train.stationTown << endl;
+        std::cout << "Train: " << train.name << " - ";
+        bool first = true;
+        for (const auto &station : train.stationTown)
+        {
+            if (!first)
+            {
+                std::cout << " - ";
+            }
+            std::cout << station;
+            first = false;
+        }
+        std::cout << std::endl;
     }
 }
