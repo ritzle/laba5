@@ -7,6 +7,15 @@
 
 using namespace std;
 
+enum plane
+{ // перечислимый тип, ввод с консоли числа
+    CREATE_TRAIN = 1,
+    TRAINS_FOR_TOWN,
+    TOWNS_FOR_TRAIN,
+    TRAINS,
+    EXIT
+};
+
 int main()
 {
 
@@ -23,33 +32,32 @@ int main()
     {
         cout << endl;
         cout << "Enter action: ";
-        cin >> action;
-        switch (action)
-        {
-        case '1':
-            creatTrain(trains, towns);
-            break;
+        int command;
+        cin >> command;
 
-        case '2':
+        if (command == plane::CREATE_TRAIN)
+        {
+            creatTrain(trains, towns);
+        }
+        else if (command == plane::TRAINS_FOR_TOWN)
+        {
             cout << "Enter town: ";
             cin >> town;
             trainsForTown(town, towns);
-            break;
-
-        case '3':
+        }
+        else if (command == plane::TOWNS_FOR_TRAIN)
+        {
             cout << "Enter train: ";
             cin >> train;
             townsForTrain(train, trains, towns);
-            break;
-
-        case '4':
+        }
+        else if (command == plane::TRAINS)
+        {
             coutTrains(trains);
-            break;
-
-        case 'E':
+        }
+        else if (command == plane::EXIT)
+        {
             return 0;
-        default:
-            cout << "unknown team\n";
         }
     }
 }
