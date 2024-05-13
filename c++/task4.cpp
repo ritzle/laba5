@@ -33,14 +33,77 @@ int main()
 {
     vector<infoPeople> people;
 
-    friends("Peter", "Goward", people);
-    cout << countFriends("Sally", people) << endl;
-    friends("Goward", "Sally", people);
-    cout << countFriends("Goward", people) << endl;
-    cout << countFriends("Peter", people) << endl;
-    cout << (questionFriends("Goward", "Peter", people) ? "YES" : "NO") << endl;
-    cout << (questionFriends("Peter", "Sally", people) ? "YES" : "NO") << endl;
-    cout << (questionFriends("Jenny", "jastin", people) ? "YES" : "NO") << endl;
+    char action;
+    cout << endl;
+    cout << "Enter action: ";
+    cin >> action;
+    switch (action)
+    {
+    case '1':
+        friends("Peter", "Goward", people);
+        cout << countFriends("Sally", people) << endl;
+        friends("Goward", "Sally", people);
+        cout << countFriends("Goward", people) << endl;
+        cout << countFriends("Peter", people) << endl;
+        cout << (questionFriends("Goward", "Peter", people) ? "YES" : "NO") << endl;
+        cout << (questionFriends("Peter", "Sally", people) ? "YES" : "NO") << endl;
+        cout << (questionFriends("Jenny", "jastin", people) ? "YES" : "NO") << endl;
+
+        break;
+
+    case '2':
+
+        friends("Alice", "Bob", people);
+        friends("Bob", "Charlie", people);
+        cout << countFriends("Alice", people) << endl;
+        cout << countFriends("Bob", people) << endl;
+        cout << countFriends("Charlie", people) << endl;
+        cout << (questionFriends("Alice", "Bob", people) ? "YES" : "NO") << endl;
+        cout << (questionFriends("Bob", "Charlie", people) ? "YES" : "NO") << endl;
+        cout << (questionFriends("Alice", "Charlie", people) ? "YES" : "NO") << endl;
+        break;
+
+    case '3':
+        cout << countFriends("John", people) << endl;
+        cout << countFriends("Jane", people) << endl;
+        cout << (questionFriends("John", "Jane", people) ? "YES" : "NO") << endl;
+        break;
+
+    case '4':
+        friends("Emily", "Olivia", people);
+        cout << (questionFriends("Emily", "Olivia", people) ? "YES" : "NO") << endl;
+        cout << (questionFriends("Emily", "David", people) ? "YES" : "NO") << endl;
+        break;
+
+    case '5':
+        friends("Alice", "Bob", people);
+        friends("Alice", "Charlie", people);
+        friends("Alice", "David", people);
+        friends("Alice", "Emily", people);
+        friends("Bob", "Charlie", people);
+        friends("David", "Emily", people);
+        friends("Charlie", "Emily", people);
+
+        cout << countFriends("Alice", people) << endl;   // Вывод: 4
+        cout << countFriends("Bob", people) << endl;     // Вывод: 2
+        cout << countFriends("Charlie", people) << endl; // Вывод: 3
+        cout << countFriends("David", people) << endl;   // Вывод: 2
+        cout << countFriends("Emily", people) << endl;   // Вывод: 3
+
+        cout << (questionFriends("Alice", "Bob", people) ? "YES" : "NO") << endl;     // Вывод: YES
+        cout << (questionFriends("Alice", "Charlie", people) ? "YES" : "NO") << endl; // Вывод: YES
+        cout << (questionFriends("Alice", "David", people) ? "YES" : "NO") << endl;   // Вывод: YES
+        cout << (questionFriends("Alice", "Emily", people) ? "YES" : "NO") << endl;   // Вывод: YES
+        cout << (questionFriends("Bob", "Charlie", people) ? "YES" : "NO") << endl;   // Вывод: YES
+        cout << (questionFriends("David", "Emily", people) ? "YES" : "NO") << endl;   // Вывод: YES
+        cout << (questionFriends("Charlie", "Emily", people) ? "YES" : "NO") << endl;
+        break;
+
+    case 'E':
+        return 0;
+    default:
+        cout << "unknown team\n";
+    }
     // printFriend(people);
 }
 
